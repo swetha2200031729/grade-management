@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            background-color: lavender;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #000;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .sidebar .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Content Area Styling */
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 60px;
+			 margin-bottom : 60px; 
+			  margin-top: 1px; 
+		
+            padding: 40px 20px;
+            background-color: #f4f4f4;
+            min-height: 100vh; /* Ensure the content covers full height */
+        }
+
+        /* Glowing Effect for Container */
+        .glowing-container {
+            width: 60%; /* Increased width */
+            height: 400px; /* Increased height */
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.6), 0 0 30px rgba(0, 123, 255, 0.3);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .glowing-container:hover {
+            box-shadow: 0 0 25px rgba(0, 123, 255, 0.8), 0 0 40px rgba(0, 123, 255, 0.5);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        ul {
+            max-height: 300px; /* Adjust to fit content */
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        /* Main Layout Fix */
+        body {
+            display: flex;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-container {
+            flex-grow: 1;
+            margin-left: 150px; /* Matches the width of the sidebar */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans antialiased">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="text-3xl font-bold">Edu<span class="text-red-500">Dashboard</span></h2><br>
+		<span th:text="${ user.username }" class="text-lg font-medium"></span><br><br>
+        <a th:href="@{/}"class="active">Dashboard</a>
+        <a th:href="@{/courses/list}">Courses</a>
+		<div th:if="${allowCreate}">
+		        <a href="/courses/showCreateCourseForm" class="active">Add Courses</a>
+				</div>
+        <a th:href="@{/about}" >About</a>
+		<div th:if="${allowCreate}">
+        <a th:href="@{/registrations/upload-registration-file}">Course Mapping</a>
+		</div>
+        <a th:href="@{/login}">Logout</a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Courses -->
+            <section class="glowing-container">
+                <h2 class="text-xl font-semibold mb-4">Assigned Courses</h2>
+                <ul class="space-y-4">
+                    <li th:each=" course : ${ user.enrolledCourses}">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium" th:text="${course.courseName}"></span>
+                            <span class="text-sm text-gray-500">
+                                <a th:href="@{/assignments/list/{id}(id=${course.id})}" class="">View ></a>
+                            </span>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <p th:text="${course.assignmentEntity.size() + ' assignments available'}"></p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+
+</html>

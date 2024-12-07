@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Teacher Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f3f4f6;
+        }
+
+        .card {
+            width: 800px;
+            max-width: 100%;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+        }
+
+        .form-input:invalid {
+            border-color: red;
+        }
+
+        .form-input:valid {
+            border-color: green;
+        }
+    </style>
+</head>
+
+<body class="flex justify-center items-center min-h-screen bg-gray-100">
+
+    <div class="card">
+        <h1 class="text-2xl font-bold text-gray-800">Register for EduLearn</h1>
+        <p class="text-gray-600">Fill out the form to create your teacher account</p>
+
+        <form id="registration-form" th:action="@{/registerTeacher}" th:object="${user}" method="post" novalidate>
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- Username -->
+            <div class="mt-4">
+                <label for="username" class="block text-gray-700">Username</label>
+                <input id="username" type="text" name="username" placeholder="Username" th:field="*{username}" 
+                       class="form-input border p-2 rounded w-full" required />
+                <p class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            </div>
+
+            <!-- Password -->
+            <div class="mt-4">
+                <label for="password" class="block text-gray-700">Password</label>
+                <input id="password" type="password" name="password" placeholder="Password" th:field="*{password}" 
+                       class="form-input border p-2 rounded w-full" 
+                       pattern="^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&*]).{8,}$"
+                       title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+                       required />
+                <p class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            </div>
+
+            <!-- First Name -->
+            <div class="mt-4">
+                <label for="firstName" class="block text-gray-700">First Name</label>
+                <input id="firstName" type="text" name="firstName" placeholder="First Name" th:field="*{firstName}" 
+                       class="form-input border p-2 rounded w-full" required />
+                <p class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+            </div>
+
+            <!-- Last Name -->
+            <div class="mt-4">
+                <label for="lastName" class="block text-gray-700">Last Name</label>
+                <input id="lastName" type="text" name="lastName" placeholder="Last Name" th:field="*{lastName}" 
+                       class="form-input border p-2 rounded w-full" required />
+                <p class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+            </div>
+
+            <!-- Email -->
+            <div class="mt-4">
+                <label for="email" class="block text-gray-700">Email</label>
+                <input id="email" type="email" name="email" placeholder="Email" th:field="*{email}" 
+                       class="form-input border p-2 rounded w-full" 
+                       pattern="[a-zA-Z0-9._%+-]+@gmail\.com$" 
+                       title="Email must be a valid Gmail address."
+                       required />
+                <p class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="mt-4">
+                <label for="dateOfBirth" class="block text-gray-700">Date of Birth</label>
+                <input id="dateOfBirth" type="date" name="dateOfBirth" th:field="*{dateOfBirth}" 
+                       class="form-input border p-2 rounded w-full" required />
+                <p class="error-message" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-6">
+                <button type="submit" class="bg-blue-500 text-white p-3 rounded w-full hover:bg-blue-600">
+                    Register
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-4 text-center">
+            <p>Already have an account? <a href="/loginTeacher" class="text-blue-500 hover:underline">Login here</a></p>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Assignment Details</title>
+    <style>
+        /* General Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Light gray background */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: lavender;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #000;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .sidebar .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Content Area Styling */
+        .content {
+            margin-left: 250px; /* Matches the sidebar width */
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .upload-container {
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-container label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+            color: #333;
+        }
+
+        .upload-container input[type="file"] {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .upload-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .upload-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Edu<span style="color: red;">Dashboard</span></h2>
+        <a href="/">Dashboard</a>
+        <a href="/courses/list">Courses</a>
+		
+		<div th:if="${allowCreate}">
+		        <a href="/courses/showCreateCourseForm" class="active">Add Courses</a>
+				</div>
+        <a href="/about" class="active">About</a>
+        <a href="/registrations/upload-registration-file">Register Registration</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <h1 style="text-align: center; color: #333;">Assignment Details</h1>
+
+        <!-- Assignment Details -->
+<div class="container">
+    <!-- Assignment Name -->
+    <h2 th:text="${getAssignmentDetails.assignmentName}">Assignment Name</h2>
+
+    <!-- Assignment Description -->
+    <div style="display: flex; align-items: center; margin-top: 10px;">
+        <h3 style="margin: 0;">Description:</h3>
+        <p th:text="${getAssignmentDetails.assignmentDescription}" 
+           style="margin-left: 10px; font-size: 18px; line-height: 1.6; color: #333;">
+            Assignment Description
+        </p>
+    </div>
+ <!-- Assignment Deadline -->
+    <div style="display: flex; align-items: center; margin-top: 10px;">
+        <h3 style="margin: 0;">Deadline:</h3>
+        <span th:text="${getAssignmentDetails.deadLine.get(0).dueDate}" 
+              style="margin-left: 10px; color: red; font-size: 18px;">
+            Assignment Deadline
+        </span>
+    </div>
+          <!-- Question File Download -->
+<div style="display: flex; align-items: center; margin-top: 10px;">
+    <h3 style="margin: 0;">Question File:</h3>
+    <a th:href="@{'/assignments/download-question-file/' + ${getAssignmentDetails.id}}" 
+       style="margin-left: 10px; color: #007bff; text-decoration: none; font-size: 16px;">
+        Download File
+    </a>
+</div>
+            <!-- Submit Solution Form -->
+            <div>
+                <h3>Submit Your Solution:</h3>
+                <div class="upload-container">
+                    <form th:action="@{'/assignments/submit-assignment'}" th:object="${submission}" method="post"
+                        enctype="multipart/form-data">
+                        <input type="hidden" th:field="${submission.assignmentEntity.id}" name="assignment.id">
+                        <label for="solutionFile">Upload Solution File:</label>
+                        <input type="file" id="solutionFile" th:field="${submission.submissionAnsFile}" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+<br><br>
+            <div th:if="${existingSubmission} != null">
+                <a th:href="@{'/assignments/submissions/file/' + ${existingSubmission.id}}">
+                    View Your Submission
+                </a>
+            </div>
+
+            <!-- Back to List Link -->
+            <a th:href="@{'/assignments/list/' + ${getAssignmentDetails.courseEntity.id}}" style="margin-top: 20px;">
+                Back to Assignment List
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

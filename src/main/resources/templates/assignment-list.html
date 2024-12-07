@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Assignment List</title>
+    <style>
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            background-color: lavender;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #000;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .sidebar .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            margin-left: 250px; /* Matches the width of the sidebar */
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        /* Form Container Styling */
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Glow effect on hover */
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="text-3xl font-bold">Edu<span class="text-red-500">Dashboard</span></h2>
+        <a href="/">Dashboard</a>
+        <a href="/courses/list">Courses</a>
+		<div th:if="${allowCreate}">
+        <a href="/courses/showCreateCourseForm" class="active">Add Courses</a>
+		</div> <!-- copy paste this -->
+        <a href="/about">About</a>
+		<div th:if="${allowCreate}">
+        <a href="/registrations/upload-registration-file">Register Registration</a>
+		</div>
+        <a href="/login">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div style="background: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+            <h1 style="text-align: center; color: #333;">Assignments for Course </h1>
+
+			<div th:if="${allowCreate}">
+            <a th:href="@{/assignments/show-create-assignment-form/{id}(id=${courseId})}" 
+               style="display: inline-block; padding: 10px 15px; background: #007BFF; color: #fff; text-decoration: none; border-radius: 3px; margin-bottom: 20px;">Create New Assignment</a>
+			   </div>
+            <ul style="list-style: none; padding: 0;">
+                <li th:if="${assignments == null || assignments.isEmpty()}"
+                    style="background: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 3px;">
+                    No assignments found.
+                </li>
+                <li th:each="assignment : ${assignments}" 
+                    style="background: #f9f9f9; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 3px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: bold; color: #333;">[[${assignment.assignmentName}]]</span>
+                    <span style="color: #555;">[[${assignment.assignmentDescription}]]</span>
+                    <a th:href="@{'/assignments/show-assignment-details/' + ${assignment.id}}" 
+                       style="color: #007BFF; text-decoration: none;">View Details</a>
+					   
+					   <div th:if="${allowcreate}">
+                    <a th:href="@{'/assignments/delete-assignment/' + ${assignment.id}}" 
+                       style="color: rgb(255, 0, 0); text-decoration: none;">Delete</a>
+					   </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Assignment</title>
+    <style>
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            background-color: lavender;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #000;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .sidebar .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Content Area Styling */
+        .content {
+            margin-left: 260px; /* Adjust based on sidebar width */
+            padding: 40px 20px;
+            background-color: #f4f4f4;
+            min-height: 100vh; /* Ensure the content covers full height */
+            
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="text-3xl font-bold">Edu<span class="text-red-500">Dashboard</span></h2>
+        <a href="/">Dashboard</a>
+        <a href="/courses/list"class="active">Courses</a>
+        <a href="/courses/showCreateCourseForm">Add Courses</a>
+        <a href="/about" >About</a>
+        <a href="/registrations/upload-registration-file">Register Registration</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="container">
+            <h1 style="text-align: center; color: #333;">Create Assignment</h1>
+            <form th:action="@{/assignments/create-assignment-form}" th:object="${assignment}" method="post" enctype="multipart/form-data"
+                  style="display: flex; flex-direction: column;">
+                <input type="hidden" th:value="${assignment.course.id}" name="course.id">
+
+                <label for="assignmentName" style="margin: 10px 0 5px; color: #333; font-weight: bold;">Assignment Name:</label>
+                <input type="text" id="assignmentName" name="assignmentName" placeholder="Enter assignment name" required
+                       style="padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 3px;" th:field="${assignment.assignmentName}">
+
+                <label for="assignmentDescription" style="margin: 10px 0 5px; color: #333; font-weight: bold;">Description:</label>
+                <textarea id="assignmentDescription" name="assignmentDescription" placeholder="Enter assignment description" required
+                          style="padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 3px;"  th:field="${assignment.assignmentDescription}"></textarea>
+
+                <label for="deadLine" style="margin: 10px 0 5px; color: #333; font-weight: bold;">Deadline:</label>
+                <input type="datetime-local" id="deadLine" name="deadLine"  required
+                       style="padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 3px;" th:field="${assignment.deadLine}"> 
+
+                <label for="assignmentQueFile" style="margin: 10px 0 5px; color: #333; font-weight: bold;">Upload Question File:</label>
+                <input type="file" id="assignmentQueFile" name="assignmentQueFile" required th:field="${assignment.assignmentQueFile}"
+                       style="padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 3px;">
+
+                <div style="margin-top: 20px;">
+                    <button type="submit" 
+                            style="padding: 10px 15px; font-size: 1rem; background: #007BFF; color: #fff; border: none; border-radius: 3px; cursor: pointer;">Submit</button>
+                    <a th:href="@{'/assignments/list/' + ${assignment.course.id}}" 
+                       style="padding: 10px 15px; font-size: 1rem; background: #ccc; color: #333; text-decoration: none; border-radius: 3px; margin-left: 10px;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

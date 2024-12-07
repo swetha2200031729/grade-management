@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Grade</title>
+    <style>
+        /* General Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Light gray background */
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: lavender;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #000;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .sidebar .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Content Area Styling */
+        .content {
+            margin-left: 250px; /* Matches the sidebar width */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1),
+                        0 0 20px rgba(0, 123, 255, 0.5); /* Glow effect */
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2),
+                        0 0 25px rgba(0, 123, 255, 0.7); /* Enhanced glow on hover */
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Edu<span style="color: red;">Dashboard</span></h2>
+        <a href="/">Dashboard</a>
+        <a href="/courses/list">Courses</a>
+        <a href="/courses/showCreateCourseForm">Add Courses</a>
+        <a href="/about" class="active">About</a>
+        <a href="/registrations/upload-registration-file">Course Registration</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="container">
+            <h1>Add Grade</h1>
+
+            <!-- Grade Form -->
+            <form th:object="${grade}" th:action="@{/grades/create-grade-form}" method="post">
+
+                <!-- Submission Information (Read-Only) -->
+                <p>
+                    <strong>Submission ID:</strong>
+                    <span th:text="${grade.submission.id}"></span>
+                    <input type="hidden" th:field="${grade.submission.id}" />
+                </p>
+
+                <!-- Grade Input -->
+                <label for="grade">Grade (0-100):</label>
+                <input type="number" id="grade" name="grade" th:value="${grade.grade}" min="0" max="100" required />
+                <br><br>
+
+                <!-- Feedback -->
+                <label for="feedback">Feedback:</label>
+                <textarea id="feedback" name="feedback" th:text="${grade.feedback}" placeholder="Enter feedback"></textarea>
+                <br><br>
+
+                <!-- Submit Button -->
+                <button type="submit">Save</button>
+            </form>
+
+            <!-- Back to Submission Details -->
+            <br>
+            <a th:href="@{'/assignments/faculty/show-assignment-details/' + ${grade.submission.assignmentEntity.id}}">Back to Submission Details</a>
+        </div>
+    </div>
+</body>
+</html>

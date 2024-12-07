@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General Body Styling */
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items at the top */
+            height: 100vh; /* Full viewport height */
+            margin: 0;
+            overflow-y: auto; /* Enable scrolling if content exceeds viewport */
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            background-color: lavender;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #000;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .sidebar .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Content Area Styling */
+        .content {
+            margin-left: 260px; /* Adjust based on sidebar width */
+            padding: 40px 20px;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .mission {
+            font-style: italic;
+            color: #6c757d;
+        }
+
+        .team-section {
+            margin-top: 30px;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .team-member h5 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            font-size: 14px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="text-3xl font-bold">Edu<span class="text-red-500">Dashboard</span></h2><br>
+        <a href="/">Dashboard</a>
+        <a href="/courses/list">Courses</a>
+        <a href="/login">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>
+                Welcome to EduDashboard, your one-stop platform for seamless learning management. Our goal is to empower students and educators with tools to simplify education and enhance productivity.
+            </p>
+            <p class="mission">
+                "Our mission is to bridge the gap between learning and innovation."
+            </p>
+            <div class="team-section">
+                <h3 class="mb-4">Meet Our Team</h3>
+                <div class="row">
+                    <div class="col-md-4 team-member">
+                        <img src="https://via.placeholder.com/100" alt="Team Member">
+                        <h5>Anusha Majji</h5>
+                    </div>
+                    <div class="col-md-4 team-member">
+                        <img src="https://via.placeholder.com/100" alt="Team Member">
+                        <h5>Moorkonda Poornima</h5>
+                    </div>
+                    <div class="col-md-4 team-member">
+                        <img src="https://via.placeholder.com/100" alt="Team Member">
+                        <h5>Varanasi Sai Sree Swetha</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

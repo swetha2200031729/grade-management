@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Grade Details</title>
+    <style>
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: lavender;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar a {
+            display: block;
+            color: #000;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+        .sidebar .active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Container for Grade Details */
+        .container {
+            margin-left: 400px; /* Push content to the right of the sidebar */
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+            max-width: 800px;
+            margin-top: 100px; /* Space from top */
+        }
+
+        .container:hover {
+            box-shadow: 0 0 15px 5px rgba(0, 123, 255, 0.4); /* Blue glow on hover */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            color: #007BFF;
+            margin: 10px 0;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        /* Link Styling */
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Edu<span style="color: red;">Dashboard</span></h2>
+        <a href="/">Dashboard</a>
+        <a href="/courses/list">Courses</a>
+        <a href="/courses/showCreateCourseForm"class="active">Add Courses</a>
+        <a href="/about" >About</a>
+        <a href="/registrations/upload-registration-file">Course Registration</a>
+    </div>
+
+    <!-- Grade Details Container -->
+    <div class="container">
+        <h1>Grade Details</h1>
+
+        <!-- Grade Details -->
+        <div>
+            <p><strong>Grade ID:</strong> <span th:text="${grade.id}"></span></p>
+            <p><strong>Submission ID:</strong> <span th:text="${grade.submission.id}"></span></p>
+            <p><strong>Graded By:</strong> <span th:text="${grade.gradedBy.username}"></span></p>
+            <p><strong>Score:</strong> <span th:text="${grade.grade} + '/ 100'"></span></p>
+            <p><strong>Feedback:</strong></p>
+            <p th:text="${grade.feedback}"></p>
+        </div>
+
+        <!-- Navigation Links -->
+        <div>
+            <!-- Link to Submission Details -->
+            <a th:href="@{'/assignments/faculty/show-assignment-details/' + ${grade.submission.assignmentEntity.id}}">Back to Assignment Page</a>
+            <br>
+            <!-- Link to Edit Grade -->
+            <a th:href="@{'/grades/update-grade-form/' + ${grade.id}}">Edit Grade</a>
+        </div>
+    </div>
+</body>
+
+</html>
